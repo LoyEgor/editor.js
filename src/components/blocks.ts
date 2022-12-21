@@ -6,8 +6,11 @@ import { MoveEvent } from '../../types/tools';
 /**
  * @class Blocks
  * @classdesc Class to work with Block instances array
+ *
  * @private
+ *
  * @property {HTMLElement} workingArea — editor`s working node
+ *
  */
 export default class Blocks {
   /**
@@ -22,6 +25,7 @@ export default class Blocks {
 
   /**
    * @class
+   *
    * @param {HTMLElement} workingArea — editor`s working node
    */
   constructor(workingArea: HTMLElement) {
@@ -61,6 +65,7 @@ export default class Blocks {
    *
    * @example
    * blocks[0] = new Block(...)
+   *
    * @param {Blocks} instance — Blocks instance
    * @param {PropertyKey} property — block index or any Blocks class property key to set
    * @param {Block} value — value to set
@@ -252,6 +257,7 @@ export default class Blocks {
    * Insert Block after passed target
    *
    * @todo decide if this method is necessary
+   *
    * @param {Block} targetBlock — target after which Block should be inserted
    * @param {Block} newBlock — Block to insert
    */

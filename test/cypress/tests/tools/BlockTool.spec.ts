@@ -17,7 +17,7 @@ describe('BlockTool', () => {
         rule1: {
           div: true,
         },
-      };
+      }
 
       public static toolbox = {
         icon: 'Tool icon',
@@ -48,7 +48,9 @@ describe('BlockTool', () => {
       public api: object;
       public config: ToolSettings;
 
-      // eslint-disable-next-line jsdoc/require-jsdoc
+      /**
+       *
+       */
       constructor({ data, block, readOnly, api, config }) {
         this.data = data;
         this.block = block;
@@ -149,7 +151,7 @@ describe('BlockTool', () => {
         constructable: class {
           public static sanitize = {
             b: true,
-          };
+          }
         },
         api: {},
         config: {},
@@ -181,7 +183,7 @@ describe('BlockTool', () => {
         constructable: class {
           public static sanitize = {
             b: true,
-          };
+          }
         },
         api: {},
         config: {},
@@ -192,7 +194,7 @@ describe('BlockTool', () => {
         constructable: class {
           public static sanitize = {
             a: true,
-          };
+          }
         },
         api: {},
         config: {},
@@ -500,7 +502,7 @@ describe('BlockTool', () => {
       const tool = new BlockTool({
         ...options,
         constructable: class {
-          public static toolbox = false;
+          public static toolbox = false
         },
       } as any);
 
@@ -511,7 +513,7 @@ describe('BlockTool', () => {
       const tool = new BlockTool({
         ...options,
         constructable: class {
-          public static toolbox = {};
+          public static toolbox = {}
         },
       } as any);
 

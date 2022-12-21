@@ -21,8 +21,17 @@ import ToolsCollection from '../tools/collection';
  * Creates Instances from Plugins and binds external config to the instances
  */
 
+type ToolClass = BlockTool | InlineTool | BlockTune;
+
 /**
- * Modules that works with tools classes
+ * Class properties:
+ *
+ * @typedef {Tools} Tools
+ * @property {Tools[]} toolsAvailable - available Tools
+ * @property {Tools[]} toolsUnavailable - unavailable Tools
+ * @property {object} toolsClasses - all classes
+ * @property {object} toolsSettings - Tools settings
+ * @property {EditorConfig} config - Editor config
  */
 export default class Tools extends Module {
   /**
@@ -35,6 +44,8 @@ export default class Tools extends Module {
 
   /**
    * Returns available Tools
+   *
+   * @returns {object<Tool>}
    */
   public get available(): ToolsCollection {
     return this.toolsAvailable;
@@ -42,6 +53,8 @@ export default class Tools extends Module {
 
   /**
    * Returns unavailable Tools
+   *
+   * @returns {Tool[]}
    */
   public get unavailable(): ToolsCollection {
     return this.toolsUnavailable;
@@ -49,6 +62,8 @@ export default class Tools extends Module {
 
   /**
    * Return Tools for the Inline Toolbar
+   *
+   * @returns {object} - object of Inline Tool's classes
    */
   public get inlineTools(): ToolsCollection<InlineTool> {
     return this.available.inlineTools;

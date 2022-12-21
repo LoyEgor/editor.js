@@ -19,6 +19,7 @@ declare const VERSION: string;
  * Short Description (눈_눈;)
  *
  * @version 2.18.0
+ *
  * @license Apache-2.0
  * @author CodeX-Team <https://ifmo.su>
  */

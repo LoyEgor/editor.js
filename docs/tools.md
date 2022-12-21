@@ -151,7 +151,7 @@ To handle pasted HTML elements object returned from `pasteConfig` getter should 
 
 For correct work you MUST provide `onPaste` handler at least for `defaultBlock` Tool.
 
-#### Example
+> Example
 
 Header Tool can handle `H1`-`H6` tags using paste handling API
 
@@ -163,27 +163,7 @@ static get pasteConfig() {
 }
 ```
 
-**Note. Same tag can be handled by one (first specified) Tool only.**
-
-**Note. All attributes of pasted tag will be removed. To leave some attribute, you should explicitly specify them. Se below**
-
-Let's suppose you want to leave the 'src' attribute when handle pasting of the `img` tags. Your config should look like this:
-
-```javascript
-static get pasteConfig() {
-  return {
-    tags: [
-      {
-        img: {
-          src: true
-        }
-      }
-    ],
-  }
-}
-```
-
-[Read more](https://editorjs.io/sanitizer) about the sanitizing configuration.
+> Same tag can be handled by one (first specified) Tool only.
 
 ### RegExp patterns handling
 

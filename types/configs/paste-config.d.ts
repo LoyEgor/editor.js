@@ -1,22 +1,12 @@
-import { SanitizerConfig } from "./sanitizer-config";
-
 /**
  * Tool onPaste configuration object
  */
 export interface PasteConfig {
   /**
-   * Array of tags Tool can substitute.
-   *
-   * Could also contain a sanitize-config if you need to save some tag's attribute.
-   * For example:
-   * [
-   *   {
-   *     img: { src: true },
-   *   }
-   * ],
+   * Array of tags Tool can substitute
    * @type string[]
    */
-  tags?: (string | SanitizerConfig)[];
+  tags?: string[];
 
   /**
    * Object of string patterns Tool can substitute.

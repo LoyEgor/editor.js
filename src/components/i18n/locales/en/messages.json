@@ -13,12 +13,10 @@
     },
     "toolbar": {
       "toolbox": {
-        "Add": ""
+        "Add": "",
+        "Filter": "",
+        "Nothing found": ""
       }
-    },
-    "popover": {
-      "Filter": "",
-      "Nothing found": ""
     }
   },
   "toolNames": {
@@ -37,8 +35,7 @@
   },
   "blockTunes": {
     "delete": {
-      "Delete": "",
-      "Click to delete": ""
+      "Delete": ""
     },
     "moveUp": {
       "Move up": ""

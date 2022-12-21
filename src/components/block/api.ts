@@ -7,6 +7,7 @@ import { BlockAPI as BlockAPIInterface } from '../../../types/api';
  * Constructs new BlockAPI object
  *
  * @class
+ *
  * @param {Block} block - Block to expose
  */
 function BlockAPI(
@@ -89,6 +90,7 @@ function BlockAPI(
      *
      * @param {string} methodName - method to call
      * @param {object} param - object with parameters
+     *
      * @returns {unknown}
      */
     call(methodName: string, param?: object): unknown {
@@ -108,6 +110,7 @@ function BlockAPI(
      * Validate Block data
      *
      * @param {BlockToolData} data - data to validate
+     *
      * @returns {Promise<boolean>}
      */
     validate(data: BlockToolData): Promise<boolean> {

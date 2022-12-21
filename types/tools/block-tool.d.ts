@@ -5,7 +5,6 @@ import { ToolConfig } from './tool-config';
 import { API, BlockAPI, ToolboxConfig } from '../index';
 import { PasteEvent } from './paste-events';
 import { MoveEvent } from './hook-events';
-import { TunesMenuConfig } from './tool-settings';
 
 /**
  * Describe Block Tool object
@@ -26,8 +25,9 @@ export interface BlockTool extends BaseTool {
 
   /**
    * Create Block's settings block
+   * @return {HTMLElement}
    */
-  renderSettings?(): HTMLElement | TunesMenuConfig;
+  renderSettings?(): HTMLElement;
 
   /**
    * Validate Block's data

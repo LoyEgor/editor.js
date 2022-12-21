@@ -1,15 +1,43 @@
 .ce-settings {
-  position: absolute;
-  z-index: 2;
-  --gap: 8px;
+  @apply --overlay-pane;
+  top: var(--toolbar-buttons-size);
+  left: 0;
+  min-width: 114px;
+  box-sizing: content-box;
 
-  @media (--not-mobile){
-    position: absolute;
-    top: calc(var(--toolbox-buttons-size) + var(--gap));
-    left: 0;
+  @media (--mobile){
+    bottom: 40px;
+    right: auto;
+    top: auto;
+  }
 
-    &--opened-top {
-      top: calc(-1 * (var(--gap) + var(--popover-height)));
+  &::before{
+    left: auto;
+    right: 12px;
+
+    @media (--mobile){
+      bottom: -5px;
+      top: auto;
+    }
+  }
+
+  display: none;
+
+  &--opened {
+    display: block;
+    animation-duration: 0.1s;
+    animation-name: panelShowing;
+  }
+
+  &__plugin-zone {
+    &:not(:empty){
+      padding: 3px 3px 0;
+    }
+  }
+
+  &__default-zone {
+    &:not(:empty){
+      padding: 3px;
     }
   }
 
@@ -33,6 +61,29 @@
 
     &--selected {
       color: var(--color-active-icon);
+    }
+
+    &--delete {
+      transition: background-color 300ms ease;
+      will-change: background-color;
+
+      .icon {
+        transition: transform 200ms ease-out;
+        will-change: transform;
+      }
+    }
+
+    &--confirm {
+      background-color: var(--color-confirm) !important;
+      color: #fff;
+
+      &:hover {
+        background-color: color-mod(var(--color-confirm) blackness(+5%)) !important;
+      }
+
+      .icon {
+        transform: rotate(90deg);
+      }
     }
   }
 }

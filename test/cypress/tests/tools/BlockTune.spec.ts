@@ -20,7 +20,9 @@ describe('BlockTune', () => {
       public data: BlockTuneData;
       public block: object;
 
-      // eslint-disable-next-line jsdoc/require-jsdoc
+      /**
+       *
+       */
       constructor({ api, config, block, data }) {
         this.api = api;
         this.config = config;

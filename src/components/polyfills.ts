@@ -19,6 +19,7 @@ interface Element {
  * otherwise, returns false.
  *
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Element/matches#Polyfill}
+ *
  * @param {string} s - selector
  */
 if (!Element.prototype.matches) {
@@ -45,6 +46,7 @@ if (!Element.prototype.matches) {
  * If there isn't such an ancestor, it returns null.
  *
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill}
+ *
  * @param {string} s - selector
  */
 if (!Element.prototype.closest) {
@@ -74,6 +76,7 @@ if (!Element.prototype.closest) {
  * DOMString objects are inserted as equivalent Text nodes.
  *
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/ParentNode/prepend#Polyfill}
+ *
  * @param {Node | Node[] | string | string[]} nodes - nodes to prepend
  */
 if (!Element.prototype.prepend) {

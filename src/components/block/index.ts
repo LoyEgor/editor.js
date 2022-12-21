@@ -5,8 +5,7 @@ import {
   BlockTune as IBlockTune,
   SanitizerConfig,
   ToolConfig,
-  ToolboxConfigEntry,
-  PopoverItem
+  ToolboxConfigEntry
 } from '../../../types';
 
 import { SavedData } from '../../../types/data-formats';
@@ -21,7 +20,6 @@ import BlockTune from '../tools/tune';
 import { BlockTuneData } from '../../../types/block-tunes/block-tune-data';
 import ToolsCollection from '../tools/collection';
 import EventsDispatcher from '../utils/events';
-import { TunesMenuConfigItem } from '../../../types/tools';
 
 /**
  * Interface describes Block class constructor argument
@@ -61,8 +59,10 @@ interface BlockConstructorOptions {
 /**
  * @class Block
  * @classdesc This class describes editor`s block, including block`s HTMLElement, data and tool
+ *
  * @property {BlockTool} tool — current block tool (Paragraph, for example)
  * @property {object} CSS — block`s css classes
+ *
  */
 
 /**
@@ -73,13 +73,11 @@ export enum BlockToolAPI {
    * @todo remove method in 3.0.0
    * @deprecated — use 'rendered' hook instead
    */
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   APPEND_CALLBACK = 'appendCallback',
   RENDERED = 'rendered',
   MOVED = 'moved',
   UPDATED = 'updated',
   REMOVED = 'removed',
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   ON_PASTE = 'onPaste',
 }
 
@@ -90,6 +88,7 @@ type BlockEvents = 'didMutated';
 
 /**
  * @classdesc Abstract Block class that contains Block information, Tool name and Tool class instance
+ *
  * @property {BlockTool} tool - Tool instance
  * @property {HTMLElement} holder - Div element that wraps block content with Tool's content. Has `ce-block` CSS class
  * @property {HTMLElement} pluginsContent - HTML content that returns by Tool's render function
@@ -244,7 +243,7 @@ export default class Block extends EventsDispatcher<BlockEvents> {
    * @param {object} options - block constructor options
    * @param {string} [options.id] - block's id. Will be generated if omitted.
    * @param {BlockToolData} options.data - Tool's initial data
-   * @param {BlockTool} options.tool — block's tool
+   * @param {BlockToolConstructable} options.tool — block's tool
    * @param options.api - Editor API module for pass it to the Block Tunes
    * @param {boolean} options.readOnly - Read-Only flag
    */
@@ -281,7 +280,7 @@ export default class Block extends EventsDispatcher<BlockEvents> {
   }
 
   /**
-   * Find and return all editable elements (contenteditable and native inputs) in the Tool HTML
+   * Find and return all editable elements (contenteditables and native inputs) in the Tool HTML
    *
    * @returns {HTMLElement[]}
    */
@@ -396,7 +395,7 @@ export default class Block extends EventsDispatcher<BlockEvents> {
 
   /**
    * is block mergeable
-   * We plugin have merge function then we call it mergeable
+   * We plugin have merge function then we call it mergable
    *
    * @returns {boolean}
    */
@@ -417,7 +416,7 @@ export default class Block extends EventsDispatcher<BlockEvents> {
   }
 
   /**
-   * Check if block has a media content such as images, iframe and other
+   * Check if block has a media content such as images, iframes and other
    *
    * @returns {boolean}
    */
@@ -487,7 +486,7 @@ export default class Block extends EventsDispatcher<BlockEvents> {
   /**
    * Set stretched state
    *
-   * @param {boolean} state - 'true' to enable, 'false' to disable stretched state
+   * @param {boolean} state - 'true' to enable, 'false' to disable stretched statte
    */
   public set stretched(state: boolean) {
     this.holder.classList.toggle(Block.CSS.wrapperStretched, state);
@@ -619,7 +618,7 @@ export default class Block extends EventsDispatcher<BlockEvents> {
         };
       })
       .catch((error) => {
-        _.log(`Saving process for ${this.name} tool failed due to the ${error}`, 'log', 'red');
+        _.log(`Saving proccess for ${this.name} tool failed due to the ${error}`, 'log', 'red');
       });
   }
 
@@ -628,6 +627,7 @@ export default class Block extends EventsDispatcher<BlockEvents> {
    * Tool's validation method is optional
    *
    * @description Method returns true|false whether data passed the validation or not
+   *
    * @param {BlockToolData} data - data to validate
    * @returns {Promise<boolean>} valid
    */
@@ -642,33 +642,22 @@ export default class Block extends EventsDispatcher<BlockEvents> {
   }
 
   /**
-   * Returns data to render in tunes menu.
-   * Splits block tunes settings into 2 groups: popover items and custom html.
+   * Enumerates initialized tunes and returns fragment that can be appended to the toolbars area
+   *
+   * @returns {DocumentFragment[]}
    */
-  public getTunes(): [PopoverItem[], HTMLElement] {
-    const customHtmlTunesContainer = document.createElement('div');
-    const tunesItems: TunesMenuConfigItem[] = [];
+  public renderTunes(): [DocumentFragment, DocumentFragment] {
+    const tunesElement = document.createDocumentFragment();
+    const defaultTunesElement = document.createDocumentFragment();
 
-    /** Tool's tunes: may be defined as return value of optional renderSettings method */
-    const tunesDefinedInTool = typeof this.toolInstance.renderSettings === 'function' ? this.toolInstance.renderSettings() : [];
-
-    /** Common tunes: combination of default tunes (move up, move down, delete) and third-party tunes connected via tunes api */
-    const commonTunes = [
-      ...this.tunesInstances.values(),
-      ...this.defaultTunesInstances.values(),
-    ].map(tuneInstance => tuneInstance.render());
-
-    [tunesDefinedInTool, commonTunes].flat().forEach(rendered => {
-      if ($.isElement(rendered)) {
-        customHtmlTunesContainer.appendChild(rendered);
-      } else if (Array.isArray(rendered)) {
-        tunesItems.push(...rendered);
-      } else {
-        tunesItems.push(rendered);
-      }
+    this.tunesInstances.forEach((tune) => {
+      $.append(tunesElement, tune.render());
+    });
+    this.defaultTunesInstances.forEach((tune) => {
+      $.append(defaultTunesElement, tune.render());
     });
 
-    return [tunesItems, customHtmlTunesContainer];
+    return [tunesElement, defaultTunesElement];
   }
 
   /**
@@ -734,6 +723,15 @@ export default class Block extends EventsDispatcher<BlockEvents> {
 
     if (_.isFunction(this.toolInstance.destroy)) {
       this.toolInstance.destroy();
+    }
+  }
+
+  /**
+   * Call Tool instance renderSettings method
+   */
+  public renderSettings(): HTMLElement | undefined {
+    if (_.isFunction(this.toolInstance.renderSettings)) {
+      return this.toolInstance.renderSettings();
     }
   }
 
@@ -854,10 +852,10 @@ export default class Block extends EventsDispatcher<BlockEvents> {
      * Update current input
      */
     this.updateCurrentInput();
-  };
+  }
 
   /**
-   * Adds focus event listeners to all inputs and contenteditable
+   * Adds focus event listeners to all inputs and contentEditables
    */
   private addInputEvents(): void {
     this.inputs.forEach(input => {
@@ -873,7 +871,7 @@ export default class Block extends EventsDispatcher<BlockEvents> {
   }
 
   /**
-   * removes focus event listeners from all inputs and contenteditable
+   * removes focus event listeners from all inputs and contentEditables
    */
   private removeInputEvents(): void {
     this.inputs.forEach(input => {

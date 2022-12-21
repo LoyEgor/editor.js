@@ -91,7 +91,15 @@ module.exports = (env, argv) => {
           use: [
             'postcss-loader',
           ],
-        }
+        },
+        {
+          test: /\.(svg)$/,
+          use: [
+            {
+              loader: 'raw-loader',
+            },
+          ],
+        },
       ],
     },
 

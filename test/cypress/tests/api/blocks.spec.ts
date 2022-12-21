@@ -16,15 +16,13 @@ describe('api.blocks', () => {
     ],
   };
 
-  beforeEach(function () {
-    cy.createEditor({
-      data: editorDataMock,
-    }).as('editorInstance');
-  });
-
-  afterEach(function () {
-    if (this.editorInstance) {
+  beforeEach(() => {
+    if (this && this.editorInstance) {
       this.editorInstance.destroy();
+    } else {
+      cy.createEditor({
+        data: editorDataMock,
+      }).as('editorInstance');
     }
   });
 
@@ -116,28 +114,6 @@ describe('api.blocks', () => {
           .then(blockText => {
             expect(blockText).to.be.eq(firstBlock.data.text);
           });
-      });
-    });
-  });
-
-  /**
-   * api.blocks.insert(type, data, config, index, needToFocus, replace, id)
-   */
-  describe('.insert()', function () {
-    it('should preserve block id if it is passed', function () {
-      cy.get('@editorInstance').then(async (editor: any) => {
-        const type = 'paragraph';
-        const data = { text: 'codex' };
-        const config = undefined;
-        const index = undefined;
-        const needToFocus = undefined;
-        const replace = undefined;
-        const id = 'test-id-123';
-
-        const block = editor.blocks.insert(type, data, config, index, needToFocus, replace, id);
-
-        expect(block).not.to.be.undefined;
-        expect(block.id).to.be.eq(id);
       });
     });
   });

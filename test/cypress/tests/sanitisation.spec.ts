@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-describe('Output sanitization', () => {
-  beforeEach(function () {
-    cy.createEditor({}).as('editorInstance');
-  });
-
-  afterEach(function () {
-    if (this.editorInstance) {
+describe('Output sanitisation', () => {
+  beforeEach(() => {
+    if (this && this.editorInstance) {
       this.editorInstance.destroy();
+    } else {
+      cy.createEditor({}).as('editorInstance');
     }
   });
 
@@ -54,10 +52,7 @@ describe('Output sanitization', () => {
     it('should save formatting for paragraph on paste', () => {
       cy.get('[data-cy=editorjs]')
         .get('div.ce-block')
-        .paste({
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          'text/html': '<p>Text</p><p><b>Bold text</b></p>',
-        });
+        .paste({ 'text/html': '<p>Text</p><p><b>Bold text</b></p>' });
 
       cy.get('@editorInstance').then(async editorInstance => {
         const output = await (editorInstance as any).save();

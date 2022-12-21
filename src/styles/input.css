@@ -17,10 +17,11 @@
     justify-content: center;
     margin-right: var(--icon-margin-right);
 
-    svg {
-      width: var(--icon-size);
-      height: var(--icon-size);
+    .icon {
+      width: 14px;
+      height: 14px;
       color: var(--grayText);
+      flex-shrink: 0;
     }
   }
 
